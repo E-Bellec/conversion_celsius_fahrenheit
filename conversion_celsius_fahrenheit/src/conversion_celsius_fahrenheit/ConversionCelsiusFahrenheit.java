@@ -1,5 +1,6 @@
 package conversion_celsius_fahrenheit;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class ConversionCelsiusFahrenheit {
@@ -39,6 +40,25 @@ public class ConversionCelsiusFahrenheit {
 				responseUser
 			);
 			
+			switch ( responseUser ) {
+				case "1": // If the response is authorized
+					
+					// Call the conversion function with the type in parameter
+					temperatureConversion(scanner, 1);
+					
+					break;
+				case "2":// If the response is authorized
+				    
+					// Call the conversion function with the type in parameter
+					temperatureConversion(scanner, 2);
+					
+					
+					break;
+				default: // If the response NOT authorized
+					System.out.println("Response not authorized");
+	
+			} // END switch
+			
 		} // END while program close = false
 		
 		System.out.println("Closure of the program");
@@ -76,4 +96,68 @@ public class ConversionCelsiusFahrenheit {
 		
 		return result;
 	} // END getConversionTheUserWantToMake
+	
+	/**
+	 * function temperatureConversion
+	 * @param formula 1 or 2 only
+	 * 1 : Conversion Celsius to Fahrenhei
+	 * 2 : Conversion Fahrenhei > Celsius
+	 */
+	public static void temperatureConversion ( Scanner scanner, int formulaIndex ) {
+		
+		System.out.println("Température à convertir :");
+		double response;
+		
+		try {
+			response = scanner.nextDouble();
+			scanner.nextLine(); // Empty the read line
+			double result = 0d;
+			
+			switch ( formulaIndex ) {
+				case 1: // Conversion Celsius > Fahrenheit
+					
+					// Process conversion
+					result = ( (9d/5d) * response)  + 32d;
+					
+					// Print the round result
+					System.out.println( 
+						round( response, 2 )  + "°C correspond à " + round( result, 2 ) + "°F"
+					);
+					
+					break;
+				case 2:// Conversion  Fahrenheit > Celsius
+					
+					// Process conversion
+					result = ( (response - 32d) * 5d) / 9d;
+					
+					// Print the round result
+					System.out.println( 
+						round( response, 2 ) + "°F correspond à " + round( result, 2 ) + "°C"
+					);
+					
+					break;
+				default: // If the formulaIndex NOT authorized
+					System.out.println("temperatureConversion : Parameter not authorized");
+			}
+			
+		} catch (InputMismatchException e){
+			System.out.println(scanner.next()+" n'est pas une valeur valide");
+			// recall function
+			temperatureConversion ( scanner, formulaIndex );
+		}
+		
+	} // END temperatureConversion
+	
+	/**
+	 * @param A
+	 * @param B
+	 * @return round result
+	 */
+	public static double round(double A, int B) {
+		return (double) ( 
+			(int) (
+				A * Math.pow(10, B) + .5
+			)
+		) / Math.pow(10, B);
+	}
 }
