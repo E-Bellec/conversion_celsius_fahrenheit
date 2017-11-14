@@ -41,23 +41,26 @@ public class ConversionCelsiusFahrenheit {
 			);
 			
 			switch ( responseUser ) {
-				case "1": // If the response is authorized
-					
-					// Call the conversion function with the type in parameter
-					temperatureConversion(scanner, 1);
-					
-					break;
-				case "2":// If the response is authorized
-				    
-					// Call the conversion function with the type in parameter
-					temperatureConversion(scanner, 2);
-					
-					
-					break;
-				default: // If the response NOT authorized
-					System.out.println("Response not authorized");
-	
-			} // END switch
+			case "1": // If the response is authorized
+				
+				// Call the conversion function with the type in parameter
+				temperatureConversion(scanner, 1);
+				
+				// ask If The Program Should Be Closed
+				programClose = askIfTheProgramShouldBeClosed(scanner); // Return for the loop
+				break;
+			case "2":// If the response is authorized
+			    
+				// Call the conversion function with the type in parameter
+				temperatureConversion(scanner, 2);
+				
+				// ask If The Program Should Be Closed
+				programClose = askIfTheProgramShouldBeClosed(scanner); // Return for the loop
+				break;
+			default: // If the response NOT authorized
+				System.out.println("Response not authorized");
+
+		} // END switch
 			
 		} // END while program close = false
 		
@@ -160,4 +163,38 @@ public class ConversionCelsiusFahrenheit {
 			)
 		) / Math.pow(10, B);
 	}
+	
+	/**
+	 * function ask If The Program Should Be Closed
+	 * @return boolean true = close
+	 */
+	public static boolean askIfTheProgramShouldBeClosed (Scanner scanner) {
+		boolean result = false;
+		char response;
+		
+		//  print ask If The Program Should Be Closed
+		System.out.println( 
+			"Souhaitez-vous convertirune autre température ? \n"
+			+ "\t N : Close program\n"
+			+ "\t Ohter key : Restart program\n"
+		);
+		
+		// Get response user
+		String responseString  = scanner.nextLine(); 
+		
+		// If response is empty
+		if ( responseString.equals("") ) {
+			response = 'o';
+		} else {
+			// if response is not empty
+			response = responseString.charAt(0);
+		}
+
+		// If the program must be closed
+		if (  response == 'N' || response == 'n' ) {
+			result = true;
+		}
+		
+		return result;
+	} // END getConversionTheUserWantToMake
 }
